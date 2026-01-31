@@ -16,7 +16,10 @@
     "browser"
   ],
   "license": "SEE LICENSE IN LICENSE.md",
-  "activationEvents": [],
+  "activationEvents": [
+    "onStartupFinished",
+    "onCommand:open-file-on-git-remote.openRemoteFile"
+  ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
@@ -40,14 +43,13 @@
       "editor/context": [
         {
           "command": "open-file-on-git-remote.openRemoteFile",
-          "when": "resourceLangId != ''",
           "group": "navigation"
         }
       ],
       "explorer/context": [
         {
           "command": "open-file-on-git-remote.openRemoteFile",
-          "when": "explorerResourceIsFolder == false && resourceLangId != ''",
+          "when": "explorerResourceIsFolder == false",
           "group": "navigation"
         }
       ]
