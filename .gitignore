@@ -4,3 +4,5 @@ node_modules
 .vscode-test/
 *.vsix
 .DS_Store
+
+open-file-on-git-remote.code-workspace
