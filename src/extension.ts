@@ -92,9 +92,15 @@ export function activate(context: vscode.ExtensionContext) {
         repo.state.remotes.find((r: { name: string }) => r.name === "origin") ||
         repo.state.remotes[0];
 
-      outputChannel.appendLine(`repo.state.remotes: ${JSON.stringify(repo.state.remotes)}`);
-      outputChannel.appendLine(`repo.state.remotes.find((r: { name: string }) => r.name === "origin")): ${JSON.stringify(repo.state.remotes.find((r: { name: string }) => r.name === "origin"))}`);
-      outputChannel.appendLine(`repo.state.remotes[0]: ${JSON.stringify(repo.state.remotes[0])}`);
+      // outputChannel.appendLine(
+      //   `repo.state.remotes: ${JSON.stringify(repo.state.remotes)}`,
+      // );
+      // outputChannel.appendLine(
+      //   `repo.state.remotes.find((r: { name: string }) => r.name === "origin")): ${JSON.stringify(repo.state.remotes.find((r: { name: string }) => r.name === "origin"))}`,
+      // );
+      // outputChannel.appendLine(
+      //   `repo.state.remotes[0]: ${JSON.stringify(repo.state.remotes[0])}`,
+      // );
 
       if (!originRemote) {
         outputChannel.appendLine("No Git remote found for this repository.");
@@ -112,13 +118,12 @@ export function activate(context: vscode.ExtensionContext) {
 
       // Get the current branch name
       const branch = repo.state.HEAD?.name || "main";
-      outputChannel.appendLine("branch: " + branch);
+      // outputChannel.appendLine("branch: " + branch);
 
       // Get the relative path of the file in the repo
       const relativePath = filePath
         .substring(repo.rootUri.fsPath.length + 1)
         .replace(/\\/g, "/");
-      // outputChannel.appendLine("relativePath: " + relativePath);
 
       // Convert remote URL to web URL (GitHub/GitLab/Bitbucket basic support)
       // ssh://git@github.com/insilications/unplugin-inline-functions
@@ -127,23 +132,21 @@ export function activate(context: vscode.ExtensionContext) {
         .replace(/^(:?ssh:\/\/)?git@([^:\n]+)/, "https://$1/")
         // .replace(/^git@([^:]+):/, "https://$1/")
         .replace(/^https?:\/\/([^@]+@)?/, "https://");
-      outputChannel.appendLine("webUrl: " + webUrl);
+      // outputChannel.appendLine("webUrl: " + webUrl);
 
       // Get url string from settings
       const customUrl = vscode.workspace
         .getConfiguration("open-file-on-git-remote")
         .get<string>("customUrl");
-      outputChannel.appendLine("Custom URL from settings: " + customUrl);
-      // let url: string;
+
+      // outputChannel.appendLine("Custom URL from settings: " + customUrl);
+
       if (customUrl) {
         const url = customUrl
           .replace("${webUrl}", webUrl)
           .replace("${branch}", branch)
           .replace("${relativePath}", relativePath);
-        // outputChannel.appendLine("Using custom URL: " + url);
 
-        // Open the URL in the default web browser
-        // outputChannel.appendLine("Attempting to open URL: " + url);
         vscode.env.openExternal(vscode.Uri.parse(url));
       }
     },
